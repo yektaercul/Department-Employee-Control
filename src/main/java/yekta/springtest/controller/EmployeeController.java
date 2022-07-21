@@ -33,8 +33,8 @@ public class EmployeeController {
 //    @RequestMapping(value = "/employees", method = RequestMethod.GET)
 //    @ResponseBody
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getEmployees (){
-        return new ResponseEntity<>(eService.getEmployees(), HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getEmployees (@RequestParam Integer pageNumber, @RequestParam Integer pageSize){
+        return new ResponseEntity<>(eService.getEmployees(pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/employees/{id}")

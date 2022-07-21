@@ -2,6 +2,9 @@ package yekta.springtest.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import yekta.springtest.model.Employee;
 import yekta.springtest.repository.EmployeeRepository;
@@ -17,8 +20,9 @@ public class EmployeeServiceImp implements EmployeeService{
     private EmployeeRepository eRepository;
 
     @Override
-    public List<Employee> getEmployees() {
-        return eRepository.findAll();
+    public List<Employee> getEmployees(int pageNumber, int pageSize) {   // pageNumber hep 0 dan baslar
+        Pageable pages = PageRequest.of(pageNumber,pageSize, Sort.Direction.DESC, "id");
+        return eRepository.findAll(pages).getContent();
     }
 
     @Override
@@ -57,6 +61,7 @@ public class EmployeeServiceImp implements EmployeeService{
 
     @Override
     public List<Employee> getEmployeesByKeyword(String name) {
-        return eRepository.findByNameContaining(name);
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");  //descending (ASC de yapabilirsin) direction, field name that is sorted according to
+        return eRepository.findByNameContaining(name, sort);
     }
 }
