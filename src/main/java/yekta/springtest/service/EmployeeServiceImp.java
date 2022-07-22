@@ -64,4 +64,16 @@ public class EmployeeServiceImp implements EmployeeService{
         Sort sort = Sort.by(Sort.Direction.DESC, "id");  //descending (ASC de yapabilirsin) direction, field name that is sorted according to
         return eRepository.findByNameContaining(name, sort);
     }
+
+    @Override
+    public List<Employee> getEmployeesByNameOrLocation(String name, String location) {
+        return eRepository.getEmployeesByNameAndLocation(name, location);
+    }
+
+    @Override
+    public Integer deleteByEmployeeName(String name) {
+        return eRepository.deleteEmployeeByName(name);
+    }
+
+
 }

@@ -80,4 +80,15 @@ public class EmployeeController {
         return new ResponseEntity<>(eService.getEmployeesByKeyword(name), HttpStatus.OK);
     }
 
+    @GetMapping("/employees/{name}/{location}")
+    public ResponseEntity<List<Employee>> getEmployeesByNameOrLocation(@PathVariable String name, @PathVariable String location){
+        return new ResponseEntity<>(eService.getEmployeesByNameOrLocation(name, location), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/employees/delete/{name}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable String name) {
+        return new ResponseEntity<>(eService.deleteByEmployeeName(name) + " No of records affected",HttpStatus.OK);
+    }
+
 }
