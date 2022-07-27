@@ -49,31 +49,31 @@ public class EmployeeServiceImp implements EmployeeService{
                                             //eğer id halihazırda varsa update eder yoksa create
     }
 
-    @Override
-    public List<Employee> getEmployeesByName(String name) {
-        return eRepository.findByName(name);
-    }
-
-    @Override
-    public List<Employee> getEmployeesByNameAndLocation(String name, String location) {
-        return eRepository.findByNameAndLocation(name, location);
-    }
-
-    @Override
-    public List<Employee> getEmployeesByKeyword(String name) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");  //descending (ASC de yapabilirsin) direction, field name that is sorted according to
-        return eRepository.findByNameContaining(name, sort);
-    }
-
-    @Override
-    public List<Employee> getEmployeesByNameOrLocation(String name, String location) {
-        return eRepository.getEmployeesByNameAndLocation(name, location);
-    }
-
-    @Override
-    public Integer deleteByEmployeeName(String name) {
-        return eRepository.deleteEmployeeByName(name);
-    }
+//    @Override
+//    public List<Employee> getEmployeesByName(String name) {
+//        return eRepository.findByName(name);
+//    }
+//
+//    @Override
+//    public List<Employee> getEmployeesByNameAndLocation(String name, String location) {
+//        return eRepository.findByNameAndLocation(name, location);
+//    }
+//
+//    @Override
+//    public List<Employee> getEmployeesByKeyword(String name) {
+//        Sort sort = Sort.by(Sort.Direction.DESC, "id");  //descending (ASC de yapabilirsin) direction, field name that is sorted according to
+//        return eRepository.findByNameContaining(name, sort);
+//    }
+//
+//    @Override
+//    public List<Employee> getEmployeesByNameOrLocation(String name, String location) {
+//        return eRepository.getEmployeesByNameAndLocation(name, location);
+//    }
+//
+//    @Override
+//    public Integer deleteByEmployeeName(String name) {
+//        return eRepository.deleteEmployeeByName(name);
+//    }
 
 
 }

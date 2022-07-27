@@ -15,18 +15,39 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Long> {
 
-    List<Employee> findByName(String name);
+//    List<Employee> findByDepartmentName(String name);
 
-    List<Employee> findByNameAndLocation(String name, String location);
+//    @Query("FROM Employee where department.name = :name")
+//    List<Employee> getEmployeeByDeptName(String name);
 
-    List<Employee> findByNameContaining(String name, Sort sort);
 
-    @Query("FROM Employee WHERE name = :name OR location = :location")
-    List<Employee> getEmployeesByNameAndLocation(String name, String location);
 
-    @Transactional
-    @Modifying  // update delete gibi queryyi degistiren requestlerde bu anot u kullanmalisin
-    @Query("DELETE FROM Employee WHERE name = :name")
-    Integer deleteEmployeeByName(String name);    // returned Integer is the number of affected rows
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    List<Employee> findByName(String name);
+//
+//    List<Employee> findByNameAndLocation(String name, String location);
+//
+//    List<Employee> findByNameContaining(String name, Sort sort);
+//
+//    @Query("FROM Employee WHERE name = :name OR location = :location")
+//    List<Employee> getEmployeesByNameAndLocation(String name, String location);
+//
+//    @Transactional
+//    @Modifying  // update delete gibi queryyi degistiren requestlerde bu anot u kullanmalisin
+//    @Query("DELETE FROM Employee WHERE name = :name")
+//    Integer deleteEmployeeByName(String name);    // returned Integer is the number of affected rows
 
 }
