@@ -10,6 +10,7 @@ import lombok.ToString;
 import yekta.springtest.request.EmployeeRequest;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -29,9 +30,12 @@ public class Employee {
     private String name;
 
 
-    @JoinColumn(name = "department_id")
-    @OneToOne
-    private Department department;
+//    @JoinColumn(name = "department_id")
+//    @OneToOne
+//    private Department department;
+
+    @OneToMany(mappedBy = "employee")    // One employee to many departments
+    private List<Department> departments;
 
     public Employee(EmployeeRequest req){
         this.name = req.getName();

@@ -11,7 +11,7 @@ public class EmployeeRequest {
 
     private String name;
 
-    private String department;
+//    private String department;    //OneToOne
 
-//    private List<String> department;
+    private List<String> department;    // OneToMany
 }

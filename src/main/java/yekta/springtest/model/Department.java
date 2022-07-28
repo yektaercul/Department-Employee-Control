@@ -19,11 +19,11 @@ public class Department {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_id")
-//    private Employee employee;
-
-    @OneToOne(mappedBy = "department")
+    @ManyToOne    // Many departments to one employee
+    @JoinColumn(name = "employee_id")
     private Employee employee;
+
+//    @OneToOne(mappedBy = "department")
+//    private Employee employee;
 
 }

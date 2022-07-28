@@ -12,9 +12,11 @@ import yekta.springtest.model.Employee;
 import yekta.springtest.repository.DepartmentRepository;
 import yekta.springtest.repository.EmployeeRepository;
 import yekta.springtest.request.EmployeeRequest;
+import yekta.springtest.response.EmployeeResponse;
 import yekta.springtest.service.EmployeeService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 //@Controller
@@ -42,8 +44,29 @@ public class EmployeeController {
 //    @RequestMapping(value = "/employees", method = RequestMethod.GET)
 //    @ResponseBody
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getEmployees (@RequestParam Integer pageNumber, @RequestParam Integer pageSize){
-        return new ResponseEntity<>(eService.getEmployees(pageNumber, pageSize), HttpStatus.OK);
+    // @RequestParam Integer pageNumber, @RequestParam Integer pageSize
+    public ResponseEntity<List<EmployeeResponse>> getEmployees (){
+//        return new ResponseEntity<>(eService.getEmployees(pageNumber, pageSize), HttpStatus.OK);
+
+        List<Employee> list = eRepo.findAll();
+        List<EmployeeResponse>  responseList = new ArrayList<>();
+
+        list.forEach(e -> {
+            EmployeeResponse eResponse = new EmployeeResponse();
+            eResponse.setId(e.getId());
+            eResponse.setEmployeeName(e.getName());
+            List<String> depts = new ArrayList<>();
+            for (Department d : e.getDepartments()) {
+                depts.add(d.getName());
+            }
+            eResponse.setDepartment(depts);
+            responseList.add(eResponse);
+        });
+
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+
+
+
     }
 
     @GetMapping("/employees/{id}")
@@ -54,36 +77,36 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody EmployeeRequest eRequest){
+    public ResponseEntity<String> saveEmployee(@Valid @RequestBody EmployeeRequest eRequest){
 
 
         // OneToMany
-//        Employee employee = new Employee(eRequest);
-//
-//        employee = eRepo.save(employee);
-//
-//        for (String s : eRequest.getDepartment()) {
-//            Department d = new Department();
-//            d.setName(s);
-//            d.setEmployee(employee);
-//
-//            dRepo.save(d);
-//        }
-//
-//        return new ResponseEntity<>("Record saved successfully", HttpStatus.CREATED);
-
-
-        // OneToOne
-        Department dept = new Department();
-        dept.setName(eRequest.getDepartment());
-
-        dept = dRepo.save(dept);
-
         Employee employee = new Employee(eRequest);
-        employee.setDepartment(dept);
 
-        employee = eRepo.save(employee);   // service i kullanmak yerine direkt repository i buraya cagirdik
-        return new ResponseEntity<>(employee, HttpStatus.CREATED);
+        employee = eRepo.save(employee);
+
+        for (String s : eRequest.getDepartment()) {
+            Department d = new Department();
+            d.setName(s);
+            d.setEmployee(employee);
+
+            dRepo.save(d);
+        }
+
+        return new ResponseEntity<>("Record saved successfully", HttpStatus.CREATED);
+
+
+//        // OneToOne
+//        Department dept = new Department();
+//        dept.setName(eRequest.getDepartment());
+//
+//        dept = dRepo.save(dept);
+//
+//        Employee employee = new Employee(eRequest);
+//        employee.setDepartment(dept);
+//
+//        employee = eRepo.save(employee);   // service i kullanmak yerine direkt repository i buraya cagirdik
+//        return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
 
     @PutMapping("/employees/{id}")
